@@ -3,8 +3,14 @@ from bs4 import BeautifulSoup
 
 url = input("Enter website URL: ")
 
-response = requests.get(url)
-soup = BeautifulSoup(response.text, "html.parser")
+try:
+    response = requests.get(url)
+    response.raise_for_status()
 
-print("\nPage Title:")
-print(soup.title.string)
+    soup = BeautifulSoup(response.text, "html.parser")
+
+    print("\nPage Title:")
+    print(soup.title.string)
+
+except requests.exceptions.RequestException:
+    print("Error fetching the website.")
